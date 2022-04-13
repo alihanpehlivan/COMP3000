@@ -5,8 +5,8 @@ import { QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter } from 'react-router-dom';
 
-import { LoadingFallback } from '@/features/misc';
-import { ErrorFallback } from '@/features/misc';
+import { ErrorFallback, LoadingFallback } from '@/features/misc';
+import { NotificationProvider } from '@/lib/notistack';
 import { queryClient } from '@/lib/react-query';
 import { AppThemeProvider } from '@/providers/theme';
 
@@ -28,8 +28,10 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         <AppThemeProvider>
           <HelmetProvider>
             <QueryClientProvider client={queryClient}>
-              {process.env.NODE_ENV !== 'test' && <ReactQueryDevtools />}
-              <BrowserRouter>{children}</BrowserRouter>
+              <ReactQueryDevtools />
+              <NotificationProvider>
+                <BrowserRouter>{children}</BrowserRouter>
+              </NotificationProvider>
               {/*<Notifications />
                 <AuthProvider>
                   <BrowserRouter>{children}</BrowserRouter>

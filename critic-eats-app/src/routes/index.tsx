@@ -1,9 +1,12 @@
 import { useRoutes } from 'react-router-dom';
 
-import { Landing } from '@/features/misc';
+import { Landing, NotFound } from '@/features/misc';
 
 export const AppRoutes = () => {
-  const commonRoutes = [{ path: '/', element: <Landing /> }];
+  const commonRoutes = [
+    { path: '/', element: <Landing /> },
+    { path: '*', element: <NotFound /> },
+  ];
   const element = useRoutes([...commonRoutes]);
 
   return <>{element}</>;

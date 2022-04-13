@@ -1,4 +1,3 @@
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -24,6 +23,7 @@ export const Landing = () => {
         <Typography variant={'subtitle1'} sx={{ marginTop: '1rem' }}>
           A place where you can share your dining experiences.
         </Typography>
+        <Button sx={{ marginTop: '1rem' }}>Continue</Button>
       </Container>
     </React.Fragment>
   );
