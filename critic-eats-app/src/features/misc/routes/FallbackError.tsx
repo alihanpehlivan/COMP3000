@@ -16,7 +16,7 @@ export const ErrorFallback = () => {
     >
       <Typography variant={'h4'} color={'secondary'}>
         Ooops, something went wrong
-        <span aria-label="chilli" role="img">
+        <span aria-label="emoji" role="img">
           💔
         </span>
       </Typography>

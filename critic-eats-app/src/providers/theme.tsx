@@ -1,8 +1,7 @@
-import { ThemeProvider } from '@emotion/react/';
 import CssBaseline from '@mui/material/CssBaseline';
-import createTheme from '@mui/material/styles/createTheme';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-const currentTheme = createTheme({
+const baseColorTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
@@ -34,6 +33,36 @@ const currentTheme = createTheme({
   },
 });
 
+const componentTheme = createTheme(
+  {
+    components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          ul: {
+            margin: 0,
+            padding: 0,
+            listStyle: 'none',
+          },
+        },
+      },
+      MuiLink: {
+        defaultProps: {
+          underline: 'none',
+          textTransform: 'initial',
+        },
+        styleOverrides: {
+          root: {
+            ':hover': {
+              color: baseColorTheme.palette.text.secondary,
+            },
+          },
+        },
+      },
+    },
+  },
+  baseColorTheme
+);
+
 interface ThemeProviderProps {
   children: React.ReactNode;
 }
@@ -42,7 +71,7 @@ export const AppThemeProvider = ({
   children,
 }: ThemeProviderProps): React.ReactElement => {
   return (
-    <ThemeProvider theme={currentTheme}>
+    <ThemeProvider theme={componentTheme}>
       <CssBaseline />
       {children}
     </ThemeProvider>

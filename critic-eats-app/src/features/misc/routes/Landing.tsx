@@ -19,7 +19,12 @@ export const Landing = () => {
           width: '100vw',
         }}
       >
-        <Typography variant={'h3'}> Welcome to CriticEats.</Typography>
+        <Typography variant={'h3'}>
+          Welcome to CriticEats
+          <span aria-label="emoji" role="img">
+            🍴
+          </span>
+        </Typography>
         <Typography variant={'subtitle1'} sx={{ marginTop: '1rem' }}>
           A place where you can share your dining experiences.
         </Typography>
