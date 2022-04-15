@@ -8,11 +8,11 @@ import reportWebVitals from './reportWebVitals';
 // Use type assertion for null check
 const root = createRoot(document.getElementById('root') as Element);
 
-root.render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
+//<StrictMode>
+//  <App />
+//</StrictMode>;
+
+root.render(<App />);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

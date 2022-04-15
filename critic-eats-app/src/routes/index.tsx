@@ -10,7 +10,7 @@ import { publicRoutes } from './public';
 const App = () => {
   return (
     <MainLayout>
-      <Suspense fallback={LoadingFallback(false)}>
+      <Suspense fallback={<LoadingFallback />}>
         <Outlet />
       </Suspense>
     </MainLayout>

@@ -6,8 +6,8 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter } from 'react-router-dom';
 
 import { ErrorFallback, LoadingFallback } from '@/features/misc';
-import { NotificationProvider } from '@/lib/notistack';
 import { queryClient } from '@/lib/react-query';
+import { NotificationProvider } from '@/providers/notistack';
 import { AppThemeProvider } from '@/providers/theme';
 
 // Workaround for React V18 with React-Query https://github.com/tannerlinsley/react-query/issues/3476

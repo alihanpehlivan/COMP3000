@@ -1,4 +1,5 @@
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import MenuIcon from '@mui/icons-material/Menu';
 import StarIcon from '@mui/icons-material/StarBorder';
 import AppBar from '@mui/material/AppBar';
@@ -30,9 +31,45 @@ type MainLayoutProps = {
 export const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <React.Fragment>
-      <Container maxWidth="xl">
-        <AppBar position="static" color="transparent" elevation={0}>
-          <Toolbar sx={{ flexWrap: 'wrap' }}>
+      <Container>
+        <AppBar
+          position="static"
+          color="primary"
+          elevation={0}
+          sx={{
+            borderBottomLeftRadius: '10px',
+            borderBottomRightRadius: '10px',
+          }}
+        >
+          <Toolbar
+            sx={{
+              justifyContent: 'space-between',
+              display: { xs: 'flex', md: 'none' },
+            }}
+          >
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+
+            <IconButton
+              size="large"
+              edge="end"
+              color="inherit"
+              aria-label="menu"
+            >
+              <FilterAltIcon />
+            </IconButton>
+          </Toolbar>
+
+          <Toolbar
+            sx={{ flexWrap: 'wrap', display: { xs: 'none', md: 'flex' } }}
+          >
             <Typography
               variant="h6"
               color="inherit"

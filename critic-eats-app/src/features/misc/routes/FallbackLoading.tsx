@@ -1,15 +1,15 @@
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 
-export const LoadingFallback = (vp = true) => {
+export const LoadingFallback = () => {
   return (
     <Box
       sx={{
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: vp ? '100vh' : '100%',
-        width: vp ? '100vw' : '100%',
+        height: '100%',
+        width: '100%',
       }}
     >
       <CircularProgress size={100} />
