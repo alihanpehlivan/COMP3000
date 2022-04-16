@@ -43,16 +43,6 @@
     "start": "craco start",
     "start:cli": "cross-env BROWSER=none craco start",
     "build": "craco build",
-    "test": "is-ci \"test:coverage\" \"test:watch\"",
-    "test:jest": "craco test",
-    "test:coverage": "CI=1 yarn test:jest -- --coverage",
-    "cy:install": "cypress install",
-    "cy:run": "cypress run",
-    "cy:open": "cypress open",
-    "test:e2e:dev": "start-server-and-test start:cli http://localhost:3000 cy:open",
-    "pretest:e2e:run": "yarn build",
-    "test:e2e:run": "start-server-and-test serve http://localhost:3000 cy:run",
-    "test:e2e": "is-ci \"test:e2e:run\" \"test:e2e:dev\"",
     "serve": "serve --no-clipboard --single --listen 3000 build",
     "eject": "react-scripts eject",
     "lint": "eslint --fix --ext .js,.ts,.tsx ./src --ignore-path .gitignore",
@@ -61,8 +51,7 @@
     "check-types": "tsc --project tsconfig.json --pretty --noEmit",
     "check-format": "npm run prettier -- --list-different",
     "validate-and-build": "npm-run-all --parallel check-types check-format lint build",
-    "validate": "npm-run-all --parallel check-types && lint-staged",
-    "generate": "plop"
+    "validate": "npm-run-all --parallel check-types && lint-staged"
   },
   "browserslist": {
     "production": [
@@ -78,7 +67,6 @@
   },
   "devDependencies": {
     "@mswjs/data": "^0.3.0",
-    "@testing-library/cypress": "^7.0.6",
     "@testing-library/react-hooks": "^7.0.0",
     "@types/dompurify": "^2.2.2",
     "@types/faker": "^5.5.7",
@@ -89,33 +77,23 @@
     "@typescript-eslint/parser": "^4.25.0",
     "autoprefixer": "^9",
     "cross-env": "^7.0.3",
-    "cypress": "^7.6.0",
     "eslint": "7.11.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-typescript": "^2.4.0",
-    "eslint-plugin-cypress": "^2.11.3",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jest-dom": "^3.9.0",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "eslint-plugin-testing-library": "^4.6.0",
     "faker": "^5.5.3",
     "is-ci": "^3.0.0",
     "is-ci-cli": "^2.2.0",
     "lint-staged": "^11.0.0",
-    "msw": "^0.29.0",
     "npm-run-all": "^4.1.5",
-    "plop": "^2.7.4",
     "prettier": "^2.3.0",
-    "react-test-renderer": "^17.0.2",
     "serve": "^12.0.0",
-    "start-server-and-test": "^1.12.5",
     "tsconfig-paths-webpack-plugin": "^3.5.1"
-  },
-  "msw": {
-    "workerDirectory": "public"
   },
   "jest": {
     "moduleNameMapper": {
