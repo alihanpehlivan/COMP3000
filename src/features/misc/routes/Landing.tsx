@@ -17,6 +17,7 @@ export const Landing = () => {
           alignItems: 'center',
           height: '100vh',
           width: '100vw',
+          textAlign: 'center',
         }}
       >
         <Typography variant={'h3'}>

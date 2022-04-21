@@ -10,12 +10,12 @@ export const ErrorFallback = () => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh',
-        width: '100vw',
+        height: '400px',
+        textAlign: 'center',
       }}
     >
       <Typography variant={'h4'} color={'secondary'}>
-        Ooops, something went wrong
+        Ooops, something went wrong.
         <span aria-label="emoji" role="img">
           💔
         </span>

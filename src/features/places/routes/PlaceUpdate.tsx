@@ -57,7 +57,6 @@ export const PlaceUpdate = ({ place }: PlaceUpdateProps) => {
         enqueueSnackbar('Update failed with: ' + error.code, {
           variant: 'error',
         });
-        return;
       });
 
     setLoading(false);

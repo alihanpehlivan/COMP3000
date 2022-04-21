@@ -10,8 +10,8 @@ export const NotFound = () => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh',
-        width: '100vw',
+        height: '400px',
+        textAlign: 'center',
       }}
     >
       <Typography variant={'h2'}>Something is wrong.</Typography>

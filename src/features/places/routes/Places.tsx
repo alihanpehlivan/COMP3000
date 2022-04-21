@@ -13,6 +13,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import { alpha, styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
@@ -92,51 +93,83 @@ const SidebarCategory = () => {
   );
 };
 
+const PlaceItemSkeleton = () => {
+  return (
+    <Card
+      sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', md: 'row' },
+        maxHeight: { xs: 300, md: 132 },
+        mb: 2,
+      }}
+    >
+      <Skeleton
+        sx={{ height: 190, width: 236 }}
+        animation="wave"
+        variant="rectangular"
+      />
+      <CardContent sx={{ flex: 1 }}>
+        <Skeleton animation="wave" height={30} style={{ marginBottom: 6 }} />
+        <Skeleton animation="wave" height={40} width="80%" />
+      </CardContent>
+    </Card>
+  );
+};
+
+const PlaceItem = (place: Place) => {
+  return (
+    <CardActionArea
+      key={place.id}
+      sx={{ mb: 2 }}
+      component={RouterLink}
+      to={`./${place.id}`}
+    >
+      <Card
+        sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
+          maxHeight: { xs: 300, md: 132 },
+        }}
+      >
+        <CardMedia
+          component="img"
+          sx={{
+            maxWidth: { md: 236 },
+            maxHeight: { xs: 132, md: 132 },
+          }}
+          height={132}
+          image={'https://picsum.photos/128/128'}
+          alt={place.name}
+        />
+        <CardContent sx={{ flex: 1 }}>
+          <Typography variant="h6">{place.name}</Typography>
+          <Typography variant="caption" paragraph>
+            {place.description}
+          </Typography>
+        </CardContent>
+      </Card>
+    </CardActionArea>
+  );
+};
+
 const ItemList = () => {
   const places = usePlaces();
 
   if (places.loading) {
-    return <LoadingFallback />;
-  }
-
-  return (
-    <React.Suspense fallback={<div>loading</div>}>
+    return (
       <React.Fragment>
-        {places.places.map((place) => (
-          <CardActionArea
-            key={place.id}
-            sx={{ mb: 2 }}
-            component={RouterLink}
-            to={`./${place.id}`}
-          >
-            <Card
-              sx={{
-                display: 'flex',
-                flexDirection: { xs: 'column', md: 'row' },
-                maxHeight: { xs: 300, md: 132 },
-              }}
-            >
-              <CardMedia
-                component="img"
-                sx={{
-                  maxWidth: { md: 236 },
-                  maxHeight: { xs: 132, md: 132 },
-                }}
-                image={'https://picsum.photos/128/128'}
-                alt={place.name}
-              />
-              <CardContent sx={{ flex: 1 }}>
-                <Typography variant="h6">{place.name}</Typography>
-                <Typography variant="caption" paragraph>
-                  {place.description}
-                </Typography>
-              </CardContent>
-            </Card>
-          </CardActionArea>
+        {[0, 1, 2, 3].map((key) => (
+          <PlaceItemSkeleton key={key} />
         ))}
       </React.Fragment>
-    </React.Suspense>
-  );
+    );
+  } else {
+    return (
+      <React.Fragment>
+        {places.places.map((place) => PlaceItem(place))}
+      </React.Fragment>
+    );
+  }
 };
 
 const DeleteForm = () => {
@@ -187,76 +220,6 @@ const DeleteForm = () => {
   );
 };
 
-const AddForm = () => {
-  // FORM DATA
-  const [isLoading, setLoading] = React.useState(false);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<Place>({
-    defaultValues: { name: '', description: '' },
-  });
-
-  async function onSubmit(data: Place) {
-    setLoading(true);
-    const colRef = collection(db, 'places');
-    await addDoc(colRef, {
-      name: data.name,
-      description: data.description,
-      createdAt: serverTimestamp(),
-    }); // post the data
-    setLoading(false);
-    reset();
-  }
-
-  return (
-    <form noValidate onSubmit={handleSubmit(onSubmit)}>
-      <TextField
-        {...register('name', {
-          required: 'This is required.',
-          minLength: { value: 1, message: 'Name is too short.' }, // { value: 4, message: 'Name is too short.' },
-          maxLength: { value: 80, message: 'Name is too long.' },
-        })}
-        error={!!errors.name?.message}
-        helperText={errors.name ? errors.name.message : ''}
-        placeholder="Name"
-        fullWidth
-        variant="outlined"
-      />
-
-      <TextField
-        {...register('description', {
-          required: 'This is required.',
-          minLength: { value: 1, message: 'Description is too short.' }, // minLength: { value: 15, message: 'Content is too short.' },
-          maxLength: { value: 200, message: 'Description is too long.' },
-        })}
-        error={!!errors.description?.message}
-        helperText={errors.description ? errors.description.message : ''}
-        placeholder="Description"
-        fullWidth
-        multiline
-        rows={5}
-        variant="outlined"
-        margin={'normal'}
-      />
-
-      <Box display="flex" justifyContent="flex-end">
-        <LoadingButton
-          loading={isLoading}
-          type="submit"
-          color="primary"
-          variant="contained"
-        >
-          Add Entry
-        </LoadingButton>
-      </Box>
-    </form>
-  );
-};
-
 export const Places = () => {
   return (
     <Grid container spacing={2}>
@@ -267,7 +230,6 @@ export const Places = () => {
       {/* Right Area */}
       <Grid item xs={12} md={9} sx={{ mt: 2 }}>
         <ItemList />
-        <AddForm />
         <DeleteForm />
       </Grid>
     </Grid>

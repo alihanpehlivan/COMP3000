@@ -3,6 +3,7 @@ import { useRoutes, Outlet } from 'react-router-dom';
 
 import { MainLayout } from '@/components/Layout';
 import { LoadingFallback } from '@/features/misc';
+import { lazyImport } from '@/utils/lazyImport';
 
 import { commonRoutes } from './common';
 import { publicRoutes } from './public';
@@ -17,6 +18,11 @@ const App = () => {
   );
 };
 
+const { AuthRoutes } = lazyImport(
+  () => import('@/features/auth'),
+  'AuthRoutes'
+);
+
 export const AppRoutes = () => {
   const appRoutes = [
     {
@@ -26,6 +32,7 @@ export const AppRoutes = () => {
     },
   ];
 
-  const element = useRoutes([...appRoutes, ...commonRoutes]);
-  return <>{element}</>;
+  const authRoutes = [{ path: '/auth/*', element: <AuthRoutes /> }];
+
+  return <>{useRoutes([...appRoutes, ...authRoutes, ...commonRoutes])}</>;
 };

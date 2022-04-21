@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { Place } from './Place';
+import { CreatePlace } from './PlaceCreate';
 import { Places } from './Places';
 
 export const PlacesRoutes = () => {
@@ -8,6 +9,7 @@ export const PlacesRoutes = () => {
     <Routes>
       <Route path="" element={<Places />} />
       <Route path=":placesId" element={<Place />} />
+      <Route path="create" element={<CreatePlace />} />
       <Route path="*" element={<Navigate to="." />} />
     </Routes>
   );

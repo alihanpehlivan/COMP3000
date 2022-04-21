@@ -14,7 +14,7 @@ export const NotificationProvider = ({
         horizontal: 'center',
       }}
       maxSnack={3}
-      preventDuplicate={true}
+      //preventDuplicate={true}
       autoHideDuration={3000}
     >
       {children}
