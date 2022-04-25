@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: 'AIzaSyAGd4i_lyW2lWoAtjPi0EQe2pL5mHGqeNw',
   authDomain: 'critic-eats.firebaseapp.com',
   projectId: 'critic-eats',

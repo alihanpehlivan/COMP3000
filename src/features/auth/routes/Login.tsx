@@ -131,7 +131,15 @@ export const Login = () => {
               />
             </Grid>
             <Grid item>
-              <Link component={RouterLink} to={'#'} variant="body2">
+              <Link
+                onClick={() =>
+                  enqueueSnackbar('This feature is not implemented.', {
+                    variant: 'error',
+                  })
+                }
+                href="#"
+                variant="button"
+              >
                 Forgot password?
               </Link>
             </Grid>
