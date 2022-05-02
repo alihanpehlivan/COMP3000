@@ -23,12 +23,17 @@ const { AuthRoutes } = lazyImport(
   'AuthRoutes'
 );
 
+const { Dashboard } = lazyImport(
+  () => import('@/features/dashboard'),
+  'Dashboard'
+);
+
 export const AppRoutes = () => {
   const appRoutes = [
     {
       path: '/app',
       element: <App />,
-      children: [...publicRoutes],
+      children: [{ path: '/', element: <Dashboard /> }, ...publicRoutes],
     },
   ];
 

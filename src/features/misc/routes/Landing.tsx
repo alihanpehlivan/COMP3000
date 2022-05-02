@@ -30,12 +30,8 @@ export const Landing = () => {
         <Typography variant={'subtitle1'} sx={{ marginTop: '1rem' }}>
           A place where you can share your dining experiences.
         </Typography>
-        <Button
-          component={RouterLink}
-          to={'//app/places'}
-          sx={{ marginTop: '1rem' }}
-        >
-          Continue
+        <Button component={RouterLink} to={'/app'} sx={{ marginTop: '1rem' }}>
+          Get Started
         </Button>
       </Container>
     </React.Fragment>
