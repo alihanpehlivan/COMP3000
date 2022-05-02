@@ -95,9 +95,7 @@ export const Register = () => {
             margin="normal"
             required
             fullWidth
-            id="email"
             label="Email Address"
-            name="email"
             autoComplete="email"
           />
 
@@ -112,10 +110,8 @@ export const Register = () => {
             margin="normal"
             required
             fullWidth
-            name="password"
             label="Password"
             type="password"
-            id="password"
             autoComplete="password"
           />
 
