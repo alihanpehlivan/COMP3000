@@ -1,5 +1,7 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Chip from '@mui/material/Chip';
+import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { Link as RouterLink } from 'react-router-dom';
@@ -16,10 +18,13 @@ export const Dashboard = () => {
       elevation={4}
     >
       <Typography variant="h5">Dashboard</Typography>
-      <Typography variant="h6">Recently Posted Places</Typography>
       <RecentPlacesImageList />
-      <Typography variant="h6">Recently Posted Reviews</Typography>
       <RecentReviewsImageList />
+
+      <Divider variant="middle">
+        <Chip label="or..." />
+      </Divider>
+
       <Button
         type="submit"
         color="primary"
