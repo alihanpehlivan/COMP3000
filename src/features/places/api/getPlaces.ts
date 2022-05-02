@@ -16,6 +16,7 @@ export const usePlaces = () => {
     snapshot.docs.forEach((doc) => {
       places.push({
         id: doc.id,
+        uuid: doc.get('uuid'),
         name: doc.get('name'),
         description: doc.get('description'),
       });

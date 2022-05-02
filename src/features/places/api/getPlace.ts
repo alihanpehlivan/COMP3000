@@ -1,4 +1,4 @@
-import { doc, query, orderBy } from 'firebase/firestore';
+import { doc } from 'firebase/firestore';
 import { useDocument } from 'react-firebase-hooks/firestore';
 
 import { db } from '@/providers/firebase';
@@ -12,6 +12,7 @@ export const usePlace = (id: string) => {
   const place = {} as Place;
   if (snapshot) {
     place.id = snapshot.id;
+    place.uuid = snapshot.get('uuid');
     place.name = snapshot.get('name');
     place.description = snapshot.get('description');
     place.createdAt = snapshot.get('createdAt');
