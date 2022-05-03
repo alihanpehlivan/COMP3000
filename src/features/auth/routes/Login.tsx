@@ -49,7 +49,7 @@ export const Login = () => {
       enqueueSnackbar('Welcome to CriticEats!', {
         variant: 'success',
       });
-      navigate('/app/welcome');
+      navigate('/app');
     }
   }, [authUser, authError]);
 

@@ -21,10 +21,10 @@ import {
 } from 'firebase/firestore';
 import { useSnackbar } from 'notistack';
 import * as React from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 
-import { db, auth } from '@/providers/firebase';
+import { useUser } from '@/features/user';
+import { db } from '@/providers/firebase';
 
 import { Place } from '../types';
 
@@ -38,7 +38,8 @@ export const PlaceCreate = ({
   setCurrentOpenDialogName,
 }: PlaceCreateProps) => {
   const [isLoading, setLoading] = React.useState(false);
-  const [user] = useAuthState(auth);
+  const { enqueueSnackbar } = useSnackbar();
+  const user = useUser();
 
   const {
     reset,
@@ -56,7 +57,7 @@ export const PlaceCreate = ({
     setLoading(true);
     const colRef = collection(db, 'places');
     await addDoc(colRef, {
-      uuid: user?.uid,
+      uuid: user.data.id,
       name: data.name,
       description: data.description,
       createdAt: serverTimestamp(),
@@ -76,8 +77,6 @@ export const PlaceCreate = ({
     // Close the dialog
     setCurrentOpenDialogName('');
   }
-
-  const { enqueueSnackbar } = useSnackbar();
 
   return (
     <Dialog

@@ -13,6 +13,7 @@ import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
+import { createUser } from '@/features/user';
 import { auth } from '@/providers/firebase';
 
 interface RegisterCredentialsDTO {
@@ -42,10 +43,25 @@ export const Register = () => {
         variant: 'error',
       });
     } else if (authUser) {
-      enqueueSnackbar('Welcome to CriticEats!', {
-        variant: 'success',
-      });
-      navigate('/app/welcome');
+      // Set initial profile information
+      const initUser = async () => {
+        await createUser(authUser.user.uid);
+      };
+
+      initUser()
+        .then(() => {
+          enqueueSnackbar('Welcome to CriticEats!', {
+            variant: 'success',
+          });
+          navigate('/app');
+        })
+        .catch((error) => {
+          // NOTE: I should probably implement some kind of rollback
+          // or use transactions?
+          enqueueSnackbar('User registration failed with: ' + error.code, {
+            variant: 'error',
+          });
+        });
     }
   }, [authUser, authError]);
 

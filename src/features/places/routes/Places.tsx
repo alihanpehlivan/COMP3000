@@ -9,10 +9,9 @@ import Paper from '@mui/material/Paper';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { auth } from '@/providers/firebase';
+import { UserUpdate, useUser } from '@/features/user/';
 
 import { usePlaces } from '../api/getPlaces';
 import { PlaceCreate } from '../components/PlaceCreate';
@@ -99,8 +98,8 @@ const ItemList = () => {
 };
 
 export const Places = () => {
-  const [user, userLoading] = useAuthState(auth);
   const [currentOpenDialogName, setCurrentOpenDialogName] = React.useState('');
+  const user = useUser();
 
   return (
     <Paper
@@ -119,7 +118,7 @@ export const Places = () => {
             marginBottom={2}
           >
             <Typography variant="h6">Listing 5 of 26 places.</Typography>
-            {user && (
+            {user.isLoggedIn && (
               <Box
                 sx={{
                   flexGrow: 1,
@@ -128,7 +127,7 @@ export const Places = () => {
                 }}
               >
                 <LoadingButton
-                  loading={userLoading}
+                  loading={user.isLoading}
                   type="submit"
                   color="primary"
                   variant="contained"
@@ -146,6 +145,9 @@ export const Places = () => {
           <ItemList />
         </Grid>
       </Grid>
+      {user.isLoggedIn && (
+        <UserUpdate userId={user.data.id} isWindowOpen={!user.data.username} />
+      )}
     </Paper>
   );
 };

@@ -9,10 +9,9 @@ import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import * as React from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { auth } from '@/providers/firebase';
+import { useUser } from '@/features/user';
 
 import { Logo } from '../AppBar/Logo';
 import { Menu } from '../AppBar/Menu';
@@ -36,7 +35,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
     setAnchorEl(null);
   };
 
-  const [user, loading] = useAuthState(auth);
+  const user = useUser();
 
   return (
     <React.Fragment>
@@ -53,7 +52,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
             <Search />
             <Box sx={{ flexGrow: 1 }} />
             {/* When logged in */}
-            {user && (
+            {user.isLoggedIn && (
               <React.Fragment>
                 <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                   <IconButton size="large" color="inherit">
@@ -82,7 +81,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
               </React.Fragment>
             )}
             {/* When logged out */}
-            {!user && (
+            {!user.isLoggedIn && (
               <Box>
                 <Button
                   component={RouterLink}
