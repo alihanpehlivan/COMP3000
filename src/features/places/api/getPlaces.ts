@@ -19,6 +19,9 @@ export const usePlaces = () => {
         uuid: doc.get('uuid'),
         name: doc.get('name'),
         description: doc.get('description'),
+        coverImageURI: doc.get('coverImageURI')
+          ? doc.get('coverImageURI')
+          : 'https://via.placeholder.com/512x256.jpg?text=No+Cover+Photo',
       });
     });
   }

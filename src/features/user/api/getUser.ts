@@ -1,4 +1,4 @@
-import { doc, FirestoreError } from 'firebase/firestore';
+import { doc } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useDocument } from 'react-firebase-hooks/firestore';
 

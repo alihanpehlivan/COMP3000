@@ -8,23 +8,13 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Rating from '@mui/material/Rating';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import {
-  collection,
-  doc,
-  addDoc,
-  getDocs,
-  deleteDoc,
-  onSnapshot,
-  query,
-  where,
-  orderBy,
-  serverTimestamp,
-} from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { useSnackbar } from 'notistack';
 import * as React from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm, Controller } from 'react-hook-form';
 
-import { db, auth } from '@/providers/firebase';
+import { useUser } from '@/features/user';
+import { db } from '@/providers/firebase';
 
 import { Review } from '../types';
 
@@ -40,7 +30,8 @@ export const ReviewCreate = ({
   setCurrentOpenDialogName,
 }: ReviewCreateProps) => {
   const [isLoading, setLoading] = React.useState(false);
-  const [user] = useAuthState(auth);
+  const { enqueueSnackbar } = useSnackbar();
+  const user = useUser();
 
   const {
     control,
@@ -56,7 +47,31 @@ export const ReviewCreate = ({
   });
 
   async function onSubmit(data: Review) {
-    console.log(data);
+    setLoading(true);
+    await addDoc(collection(db, 'reviews'), {
+      title: data.title,
+      rating: data.rating,
+      description: data.description,
+      createdAt: serverTimestamp(),
+
+      placeId: placeId,
+      uuid: user.data.id,
+      username: user.data.username,
+    })
+      .then(() => {
+        enqueueSnackbar('You have successfully posted a review.', {
+          variant: 'success',
+        });
+      })
+      .catch((error) => {
+        enqueueSnackbar('Creating review failed with error: ' + error.code, {
+          variant: 'error',
+        });
+      }); // post the data
+    setLoading(false);
+
+    // Close the dialog
+    setCurrentOpenDialogName('');
   }
 
   return (
@@ -114,7 +129,7 @@ export const ReviewCreate = ({
                 message: 'Review description is too short.',
               },
               maxLength: {
-                value: 200,
+                value: 500,
                 message: 'Review description is too long.',
               },
             })}

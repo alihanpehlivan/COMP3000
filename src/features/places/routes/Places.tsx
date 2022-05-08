@@ -4,14 +4,13 @@ import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { UserUpdate, useUser } from '@/features/user/';
+import { useUser } from '@/features/user/';
 
 import { usePlaces } from '../api/getPlaces';
 import { PlaceCreate } from '../components/PlaceCreate';
@@ -62,7 +61,7 @@ const PlaceItem = (place: Place) => {
             maxHeight: { xs: 132, md: 132 },
           }}
           height={132}
-          image={'https://picsum.photos/128/128'}
+          image={place.coverImageURI}
           alt={place.name}
           loading="lazy"
         />
@@ -106,48 +105,33 @@ export const Places = () => {
       sx={{ margin: '1rem 0rem 2rem 0rem', padding: '1rem 1rem 1rem 1rem' }}
       elevation={4}
     >
-      <Grid container spacing={2}>
-        {/* Left Area */}
-        <Grid item xs={12} md={3} sx={{ mt: 2 }}></Grid>
-        {/* Right Area */}
-        <Grid item xs={12} md={9} sx={{ mt: 2 }}>
+      <Box display="flex" flexWrap="wrap" alignItems="center" marginBottom={2}>
+        <Typography variant="h6">Place List</Typography>
+        {user.isLoggedIn && (
           <Box
-            display="flex"
-            flexWrap="wrap"
-            alignItems="center"
-            marginBottom={2}
+            sx={{
+              flexGrow: 1,
+              display: 'flex',
+              justifyContent: { xs: 'flex-start', md: 'flex-end' },
+            }}
           >
-            <Typography variant="h6">Listing 5 of 26 places.</Typography>
-            {user.isLoggedIn && (
-              <Box
-                sx={{
-                  flexGrow: 1,
-                  display: 'flex',
-                  justifyContent: { xs: 'flex-start', md: 'flex-end' },
-                }}
-              >
-                <LoadingButton
-                  loading={user.isLoading}
-                  type="submit"
-                  color="primary"
-                  variant="contained"
-                  onClick={() => setCurrentOpenDialogName('create_place')}
-                >
-                  Create Place
-                </LoadingButton>
-                <PlaceCreate
-                  isWindowOpen={currentOpenDialogName === 'create_place'}
-                  setCurrentOpenDialogName={setCurrentOpenDialogName}
-                ></PlaceCreate>
-              </Box>
-            )}
+            <LoadingButton
+              loading={user.isLoading}
+              type="submit"
+              color="primary"
+              variant="contained"
+              onClick={() => setCurrentOpenDialogName('create_place')}
+            >
+              Create Place
+            </LoadingButton>
+            <PlaceCreate
+              isWindowOpen={currentOpenDialogName === 'create_place'}
+              setCurrentOpenDialogName={setCurrentOpenDialogName}
+            />
           </Box>
-          <ItemList />
-        </Grid>
-      </Grid>
-      {user.isLoggedIn && (
-        <UserUpdate userId={user.data.id} isWindowOpen={!user.data.username} />
-      )}
+        )}
+      </Box>
+      <ItemList />
     </Paper>
   );
 };

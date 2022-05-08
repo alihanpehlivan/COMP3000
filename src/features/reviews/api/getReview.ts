@@ -15,8 +15,10 @@ export const useReview = (id: string) => {
     review.title = snapshot.get('title');
     review.description = snapshot.get('description');
     review.username = snapshot.get('username');
+    review.uuid = snapshot.get('uuid');
     review.rating = snapshot.get('rating');
     review.createdAt = snapshot.get('createdAt');
+    review.coverImageURI = snapshot.get('coverImageURI');
   }
   return { review: review, loading: loading, error: error };
 };

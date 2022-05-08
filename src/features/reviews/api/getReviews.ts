@@ -1,12 +1,4 @@
-import {
-  collection,
-  query,
-  orderBy,
-  where,
-  documentId,
-  setDoc,
-  doc,
-} from 'firebase/firestore';
+import { collection, query, where } from 'firebase/firestore';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
 import { db } from '@/providers/firebase';
@@ -27,8 +19,12 @@ export const useReviews = (id: string) => {
         title: doc.get('title'),
         description: doc.get('description'),
         username: doc.get('username'),
+        uuid: doc.get('uuid'),
         rating: doc.get('rating'),
         createdAt: doc.get('createdAt'),
+        coverImageURI: doc.get('coverImageURI')
+          ? doc.get('coverImageURI')
+          : 'https://via.placeholder.com/512x256.jpg?text=No+Cover+Photo',
       });
     });
   }

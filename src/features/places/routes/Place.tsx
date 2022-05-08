@@ -2,6 +2,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Chip from '@mui/material/Chip';
+import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import Tooltip from '@mui/material/Tooltip';
@@ -10,11 +12,11 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 
 import { LoadingFallback } from '@/features/misc';
-import { ReviewCreate } from '@/features/reviews';
-import { ReviewImageList } from '@/features/reviews';
+import { ReviewCreate, ReviewImageList } from '@/features/reviews';
 import { useUser } from '@/features/user';
 
 import { usePlace } from '../api/getPlace';
+import { PlaceCoverPhoto } from '../components/PlaceCoverPhoto';
 import { PlaceDelete } from '../components/PlaceDelete';
 import { PlaceUpdate } from '../components/PlaceUpdate';
 
@@ -37,7 +39,12 @@ export const Place = () => {
       sx={{ margin: '1rem 0rem 2rem 0rem', padding: '1rem 2rem 2rem 2rem' }}
       elevation={4}
     >
-      <Box display="flex" flexWrap="wrap" alignItems="center">
+      <Box
+        display="flex"
+        flexWrap="wrap"
+        alignItems="center"
+        marginBottom="1rem"
+      >
         <Typography variant="h6">
           {place.name}
           {user.isLoggedIn && user.data.id === place.uuid && (
@@ -91,7 +98,22 @@ export const Place = () => {
         </Box>
       </Box>
 
+      <PlaceCoverPhoto
+        placeId={place.id}
+        isOwner={user.isLoggedIn && user.data.id === place.uuid}
+      />
+
+      <Divider variant="middle">
+        <Chip label="Place Details" />
+      </Divider>
+
       <Typography variant="subtitle1">{place.description}</Typography>
+
+      <Divider variant="middle">
+        <Chip label="Reviews" />
+      </Divider>
+
+      <ReviewImageList id={place.id} />
 
       <ReviewCreate
         placeId={place.id}
@@ -111,8 +133,6 @@ export const Place = () => {
         setCurrentOpenDialogName={setCurrentOpenDialogName}
         setWindowLoading={setWindowLoading}
       />
-
-      <ReviewImageList id={place.id} />
     </Paper>
   );
 };

@@ -1,19 +1,11 @@
-import EditIcon from '@mui/icons-material/Edit';
-import InfoIcon from '@mui/icons-material/Info';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
-import Link from '@mui/material/Link';
 import ListSubheader from '@mui/material/ListSubheader';
-import Paper from '@mui/material/Paper';
 import Rating from '@mui/material/Rating';
-import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-import * as React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { useReviews } from '../api/getReviews';
 
@@ -23,6 +15,14 @@ interface ReviewImageListProps {
 
 export const ReviewImageList = ({ id }: ReviewImageListProps) => {
   const reviews = useReviews(id);
+
+  if (reviews.data.length === 0) {
+    return (
+      <Typography textAlign="center">
+        There are no reviews for this place, yet...
+      </Typography>
+    );
+  }
 
   return (
     <ImageList sx={{ mt: '1rem' }}>
@@ -48,10 +48,14 @@ export const ReviewImageList = ({ id }: ReviewImageListProps) => {
         </ListSubheader>
       </ImageListItem>
       {reviews.data.map((item) => (
-        <ImageListItem key={item.id} component={Link} href="#">
+        <ImageListItem
+          key={item.id}
+          component={RouterLink}
+          to={`//app/reviews/${item.id}`}
+        >
           <img
-            src={`https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=512&fit=crop&auto=format`}
-            srcSet={`https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=512&fit=crop&auto=format&dpr=2 2x`}
+            src={item.coverImageURI}
+            srcSet={item.coverImageURI}
             alt={item.title}
             loading="lazy"
           />

@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
-import { ErrorFallback, NotFound } from '@/features/misc';
+import { ErrorFallback } from '@/features/misc';
 
 import { Login } from './Login';
 import { Register } from './Register';
